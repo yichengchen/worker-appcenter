@@ -6,12 +6,15 @@ export default {
 
 			if (pathname.startsWith("/api")) {
 				const compoments = pathname.split("/");
-				if (compoments.length != 4 || version.length == 0) {
-					return new Response("version is empty", { status: 400 })
+				if (compoments.length != 4) {
+					return new Response("no version founded", { status: 400 })
 				}
 				const uuid = compoments[2];
 				const version = compoments[3];
-				
+
+				if (version.length == 0) {
+					return new Response("version is empty", { status: 400 })
+				}
 				const url = "https://api.appcenter.ms/v0.1/public/sparkle/apps/" + uuid
 				const res = await fetch(url)
 				const text = await res.text()
